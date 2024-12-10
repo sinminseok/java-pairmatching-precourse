@@ -21,7 +21,6 @@ public class PairMatchingController {
         OutputView.printMatchingInformation();
 
         MatchInformationRequest matchingInformation = InputView.inputMatchingInformation();
-
-        fileService.readCrewNames(Course.BACKEND);
+        List<String> names = fileService.readCrewNames(Course.valueOfName(matchingInformation.course()));
     }
 }
