@@ -6,6 +6,7 @@ public class ViewMessage {
             "2. 페어 조회\n" +
             "3. 페어 초기화\n" +
             "Q. 종료";
+    public static final String INPUT_MATCHING_INFORMATION_MESSAGE = "과정, 레벨, 미션을 선택하세요.";
 
 
     public static final String DIVISION = "#############################################";
