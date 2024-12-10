@@ -2,6 +2,7 @@ package pairmatching.view;
 
 import camp.nextstep.edu.missionutils.Console;
 import pairmatching.constants.FunctionOption;
+import pairmatching.dto.MatchInformationRequest;
 
 import java.util.List;
 
@@ -20,9 +21,10 @@ public class InputView {
         return FunctionOption.valueOfCommand(input);
     }
 
-    public static List<String> inputMatchingInformation(){
+    public static MatchInformationRequest inputMatchingInformation(){
         System.out.println(INPUT_MATCHING_INFORMATION_MESSAGE);
         String input = Console.readLine();
-        return splitDelimiter(input);
+        List<String> splits = splitDelimiter(input);
+        return new MatchInformationRequest(splits.get(0), splits.get(1), splits.get(2));
     }
 }

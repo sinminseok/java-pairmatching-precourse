@@ -1,6 +1,8 @@
 package pairmatching.controller;
 
 import pairmatching.constants.FunctionOption;
+import pairmatching.domain.Course;
+import pairmatching.dto.MatchInformationRequest;
 import pairmatching.service.FileService;
 import pairmatching.view.InputView;
 import pairmatching.view.OutputView;
@@ -18,6 +20,8 @@ public class PairMatchingController {
         FunctionOption functionOption = InputView.inputFunction();
         OutputView.printMatchingInformation();
 
-        List<String> names = InputView.inputMatchingInformation();
+        MatchInformationRequest matchingInformation = InputView.inputMatchingInformation();
+
+        fileService.readCrewNames(Course.BACKEND);
     }
 }
