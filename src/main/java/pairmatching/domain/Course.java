@@ -10,4 +10,7 @@ public enum Course {
         this.name = name;
     }
 
+    public boolean isBackEnd(){
+        return this == BACKEND;
+    }
 }
