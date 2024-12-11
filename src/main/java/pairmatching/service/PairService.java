@@ -41,6 +41,7 @@ public class PairService {
         List<Pair> pairs = new ArrayList<>();
         Level level = findLevel(matchInformationRequest.level());
         Course course = findCourse(matchInformationRequest.course());
+        Mission mission = findMission(matchInformationRequest.mission());
         List<String> shuffleNames = Randoms.shuffle(crewNames);
         if (isOdd(crewNames)) {
             matchOddCrews(level, course, shuffleNames, pairs);
@@ -48,7 +49,8 @@ public class PairService {
         if (!isOdd(crewNames)) {
             matchEvenCrews(level, course, shuffleNames, pairs);
         }
-        PairGroup pairGroup = new PairGroup(pairs);
+        MatchingInformation matchingInformation = MatchingInformation.of(level, course, mission);
+        PairGroup pairGroup = new PairGroup(pairs, matchingInformation);
         pairGroups.add(pairGroup);
         return pairGroup;
     }
@@ -79,6 +81,10 @@ public class PairService {
 
     private Course findCourse(String courseName) {
         return Course.valueOfName(courseName);
+    }
+
+    private Mission findMission(String missionName){
+        return Mission.valueOfName(missionName);
     }
 
     private boolean isOdd(List<String> values) {
