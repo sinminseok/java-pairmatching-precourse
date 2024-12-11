@@ -5,9 +5,11 @@ import java.util.stream.Collectors;
 
 public class Pair {
     private final List<Crew> crews;
+    private final Level level;
 
-    public Pair(final List<Crew> crews) {
+    public Pair(final List<Crew> crews, final Level level) {
         this.crews = crews;
+        this.level = level;
     }
 
     public List<String> getCrewNames(){
