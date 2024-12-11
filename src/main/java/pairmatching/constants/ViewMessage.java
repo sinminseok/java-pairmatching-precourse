@@ -17,4 +17,5 @@ public class ViewMessage {
             "  - 레벨3: \n" +
             "  - 레벨4: 성능개선 | 배포\n" +
             "  - 레벨5: ";
+    public static final String MATCHING_RESULT_MESSAGE = "페어 매칭 결과입니다.";
 }

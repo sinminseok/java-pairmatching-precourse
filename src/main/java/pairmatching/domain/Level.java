@@ -25,5 +25,7 @@ public enum Level {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 레벨입니다."));
     }
 
-
+    public boolean isSameLevel(Level compareLevel){
+        return this == compareLevel;
+    }
 }

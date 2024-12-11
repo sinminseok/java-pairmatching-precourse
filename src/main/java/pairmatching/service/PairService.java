@@ -9,40 +9,76 @@ import java.util.List;
 
 public class PairService {
 
+    public List<PairGroup> pairGroups = new ArrayList<>();
+
     public PairGroup matchPair(MatchInformationRequest matchInformationRequest, List<String> crewNames) {
-        List<Pair> pairs = new ArrayList<>();
-        List<String> shuffledCrew = Randoms.shuffle(crewNames);
-        Course course = Course.valueOfName(matchInformationRequest.course());
-        Level level = Level.valueOfName(matchInformationRequest.level());
-        if (isOdd(shuffledCrew)) {
-            matchOddCrews(level, course, shuffledCrew, pairs);
-            return new PairGroup(pairs);
+        PairGroup pairGroup = null;
+        for (int i = 0; i <= 3; i++) {
+            if (i == 3) {
+                throw new IllegalArgumentException("매칭 에러");
+            }
+            pairGroup = matchShufflePair(matchInformationRequest, crewNames);
+            if (canMatch(pairGroup)) {
+                break;
+            }
         }
-        matchEvenCrews(level, course, shuffledCrew, pairs);
-        return new PairGroup(pairs);
+        return pairGroup;
+    }
+
+    private boolean canMatch(PairGroup newPairGroup) {
+        for (PairGroup pairGroup : pairGroups) {
+            List<Pair> pairs = pairGroup.getPairs();
+            for (Pair pair : pairs) {
+                if (newPairGroup.isAlreadyMatch(pair)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public PairGroup matchShufflePair(MatchInformationRequest matchInformationRequest, List<String> crewNames) {
+        List<Pair> pairs = new ArrayList<>();
+        Level level = findLevel(matchInformationRequest.level());
+        Course course = findCourse(matchInformationRequest.course());
+        List<String> shuffleNames = Randoms.shuffle(crewNames);
+        if (isOdd(crewNames)) {
+            matchOddCrews(level, course, shuffleNames, pairs);
+        }
+        if (!isOdd(crewNames)) {
+            matchEvenCrews(level, course, shuffleNames, pairs);
+        }
+        PairGroup pairGroup = new PairGroup(pairs);
+        pairGroups.add(pairGroup);
+        return pairGroup;
     }
 
     private void matchEvenCrews(Level level, Course course, List<String> crewNames, List<Pair> pairs) {
         for (int i = 0; i <= crewNames.size() - 2; i += 2) {
-            Crew crew = new Crew(course, crewNames.get(i));
-            Crew pairCrew = new Crew(course, crewNames.get(i + 1));
-            pairs.add(new Pair(List.of(crew, pairCrew), level));
+            Pair pair = Pair.ofMatchInformation(List.of(crewNames.get(i), crewNames.get(i + 1)), level, course);
+            pairs.add(pair);
         }
     }
 
     private void matchOddCrews(Level level, Course course, List<String> crewNames, List<Pair> pairs) {
         for (int i = 0; i <= crewNames.size() - 3; i += 2) {
             if (i == crewNames.size() - 3) {
-                Crew crew = new Crew(course, crewNames.get(i));
-                Crew pairCrew = new Crew(course, crewNames.get(i + 1));
-                Crew lastCrew = new Crew(course, crewNames.get(i + 2));
-                pairs.add(new Pair(List.of(crew, pairCrew, lastCrew), level));
+                Pair pair = Pair.ofMatchInformation(List.of(crewNames.get(i), crewNames.get(i + 1), crewNames.get(i + 2)), level, course);
+                pairs.add(pair);
                 break;
             }
-            Crew crew = new Crew(course, crewNames.get(i));
-            Crew pairCrew = new Crew(course, crewNames.get(i + 1));
-            pairs.add(new Pair(List.of(crew, pairCrew), level));
+            Pair pair = Pair.ofMatchInformation(List.of(crewNames.get(i), crewNames.get(i + 1)), level, course);
+            pairs.add(pair);
         }
+    }
+
+
+    private Level findLevel(String levelName) {
+        return Level.valueOfName(levelName);
+    }
+
+    private Course findCourse(String courseName) {
+        return Course.valueOfName(courseName);
     }
 
     private boolean isOdd(List<String> values) {

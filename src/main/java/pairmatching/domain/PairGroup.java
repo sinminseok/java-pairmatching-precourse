@@ -10,9 +10,22 @@ public class PairGroup {
         this.pairs = pairs;
     }
 
+    public boolean isAlreadyMatch(Pair newPair) {
+        for(Pair pair : pairs){
+            if(!pair.canMatchPair(newPair)){
+                return false;
+            }
+        }
+        return true;
+    }
+
     public List<List<String>> getPairCrewNames(){
         return pairs.stream()
                 .map(Pair::getCrewNames)
                 .collect(Collectors.toList());
+    }
+
+    public List<Pair> getPairs() {
+        return pairs;
     }
 }
