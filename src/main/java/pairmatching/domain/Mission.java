@@ -1,6 +1,10 @@
 package pairmatching.domain;
 
+import pairmatching.utils.CustomException;
+
 import java.util.Arrays;
+
+import static pairmatching.utils.ErrorMessage.ERROR_MISSION_NAME;
 
 public enum Mission {
     CAR_RACE("자동차경주"),
@@ -22,6 +26,6 @@ public enum Mission {
         return Arrays.stream(values())
                 .filter(mission -> mission.name.equals(name))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 미션입니다."));
+                .orElseThrow(() -> new CustomException(ERROR_MISSION_NAME));
     }
 }

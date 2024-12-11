@@ -3,9 +3,12 @@ package pairmatching.service;
 import camp.nextstep.edu.missionutils.Randoms;
 import pairmatching.domain.*;
 import pairmatching.dto.MatchInformationRequest;
+import pairmatching.utils.CustomException;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static pairmatching.utils.ErrorMessage.ERROR_FAILED_MATCH;
 
 public class PairService {
 
@@ -15,7 +18,7 @@ public class PairService {
         PairGroup pairGroup = null;
         for (int i = 0; i <= 3; i++) {
             if (i == 3) {
-                throw new IllegalArgumentException("매칭 에러");
+                throw new CustomException(ERROR_FAILED_MATCH);
             }
             pairGroup = matchShufflePair(matchInformationRequest, crewNames);
             if (canMatch(pairGroup)) {

@@ -1,6 +1,10 @@
 package pairmatching.domain;
 
+import pairmatching.utils.CustomException;
+
 import java.util.Arrays;
+
+import static pairmatching.utils.ErrorMessage.ERROR_COURSE_NAME;
 
 public enum Course {
     BACKEND("백엔드"),
@@ -16,7 +20,7 @@ public enum Course {
         return Arrays.stream(values())
                 .filter(course -> course.name.equals(name))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 코스 정보 입니다."));
+                .orElseThrow(() -> new CustomException(ERROR_COURSE_NAME));
     }
 
     public boolean isBackEnd(){

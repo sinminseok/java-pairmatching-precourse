@@ -1,6 +1,10 @@
 package pairmatching.constants;
 
+import pairmatching.utils.CustomException;
+
 import java.util.Arrays;
+
+import static pairmatching.utils.ErrorMessage.ERROR_FUNCTION_OPTION;
 
 public enum FunctionOption {
     ONE("1"),
@@ -18,7 +22,7 @@ public enum FunctionOption {
         return Arrays.stream(values())
                 .filter(option -> option.command.equals(command))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("올바르지 않는 입력입니다."));
+                .orElseThrow(() -> new CustomException(ERROR_FUNCTION_OPTION));
     }
 
     public boolean isOne(){

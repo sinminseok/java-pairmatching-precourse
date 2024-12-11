@@ -1,6 +1,10 @@
 package pairmatching.domain;
 
+import pairmatching.utils.CustomException;
+
 import java.util.Arrays;
+
+import static pairmatching.utils.ErrorMessage.ERROR_LEVEL_NAME;
 
 public enum Level {
     LEVEL1("레벨1"),
@@ -19,7 +23,7 @@ public enum Level {
         return Arrays.stream(values())
                 .filter(level -> level.name.equals(name))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 레벨입니다."));
+                .orElseThrow(() -> new CustomException(ERROR_LEVEL_NAME));
     }
 
     public boolean isSameLevel(Level compareLevel){
