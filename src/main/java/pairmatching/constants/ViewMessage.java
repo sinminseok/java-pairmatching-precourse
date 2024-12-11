@@ -7,7 +7,8 @@ public class ViewMessage {
             "3. 페어 초기화\n" +
             "Q. 종료";
     public static final String INPUT_MATCHING_INFORMATION_MESSAGE = "과정, 레벨, 미션을 선택하세요.";
-
+    public static final String INPUT_REMATCH_MESSAGE = "매칭 정보가 있습니다. 다시 매칭하시겠습니까?";
+    public static final String YES_OR_NO_MESSAGE = "네 | 아니오";
 
     public static final String DIVISION = "#############################################";
     public static final String COURSE = "과정: 백엔드 | 프론트엔드";
